@@ -1,3 +1,4 @@
+
 """
 DIGM 131 - Assignment 1: Procedural Scene Builder
 ==================================================
@@ -40,7 +41,6 @@ import maya.cmds as cmds
 # (This is provided for you -- do not remove.)
 # ---------------------------------------------------------------------------
 cmds.file(new=True, force=True)
-
 # ---------------------------------------------------------------------------
 # Ground Plane
 # ---------------------------------------------------------------------------
@@ -57,7 +57,10 @@ ground = cmds.polyPlane(
     subdivisionsY=1,
 )[0]
 cmds.move(0, ground_y_position, 0, ground)
-
+ground_shader = cmds.shadingNode("lambert", asShader=True, name="GrassMat")
+cmds.setAttr(ground_shader + ".color", 0, .3, 0, type="double3")
+cmds.select(ground)
+cmds.hyperShade(assign=ground_shader)
 # ---------------------------------------------------------------------------
 # Example Object 1 -- a simple building (cube)
 # This is provided as an example. Study it, then add your own objects below.
@@ -76,7 +79,10 @@ building = cmds.polyCube(
 )[0]
 # Raise the building so its base sits on the ground plane.
 cmds.move(building_x, building_height / 2.0, building_z, building)
-
+building_shader = cmds.shadingNode("lambert", asShader=True, name="Red01_BuildingMat")
+cmds.setAttr(building_shader + ".color", .2, 0, 0, type="double3")
+cmds.select(building)
+cmds.hyperShade(assign=building_shader)
 # ---------------------------------------------------------------------------
 # TODO: Add Object 2
 # Create a second object using a DIFFERENT primitive type than the cube above.
@@ -85,29 +91,129 @@ cmds.move(building_x, building_height / 2.0, building_z, building)
 #   - Name the object meaningfully with the 'name' parameter or cmds.rename().
 #   - Position it so it sits on the ground (not floating or buried).
 # ---------------------------------------------------------------------------
-
-
+building_b_height = 9
+building_b_radius = 2
+building_b_x = -10
+building_b_z = -5
+#Second Building is a Skyscraper, making shape measurements and placement on the plane
+building_b = cmds.polyCylinder(name="Building_02",
+height=building_b_height, radius=building_b_radius)[0]
+cmds.move(building_b_x, building_height / 2.0, building_b_z, building_b)
+building_b_shader = cmds.shadingNode("lambert", asShader=True, name="Blue01_BuildingMat")
+cmds.setAttr(building_b_shader + ".color", 0, .5, .8, type="double3")
+cmds.select(building_b)
+cmds.hyperShade(assign=building_b_shader)
+#Assigned a light blue shader to my second building & changing name convention for the different color
 # ---------------------------------------------------------------------------
 # TODO: Add Object 3
 # ---------------------------------------------------------------------------
-
+building_height = 4
+building_width = 3
+building_depth = 2
+building_x = -8
+building_z = -9
+#Exact same as object 1, except I rotated the building and placed values to make it smaller and beside the skyscraper
+building = cmds.polyCube(name="Building_02",
+width=building_width, height=building_height, depth=building_depth)[0]
+cmds.move(building_x, building_height / 2.0, building_z, building)
+cmds.rotate(0, 30, 0)
 
 # ---------------------------------------------------------------------------
 # TODO: Add Object 4
 # ---------------------------------------------------------------------------
+road_height = .25
+road_width = 50
+road_depth = 2
+road_x = 0
+road_z = 0
+#Kept plane length in mind, made measurements for a slim, symmetrical road (& other roads that don't intersect later)
+road = cmds.polyCube(name="Road-01",
+width=road_width, height=road_height, depth=road_depth)[0]
+cmds.move(road_x, road_height / 2.0, road_z, road)
 
-
+road_shader = cmds.shadingNode("lambert", asShader=True, name="RoadMat")
+cmds.setAttr(road_shader + ".color", 0, 0, 0, type="double3")
+cmds.select(road)
+cmds.hyperShade(assign=road_shader)
+#Added no color value for the negative value (black) to result
 # ---------------------------------------------------------------------------
 # TODO: Add Object 5
 # ---------------------------------------------------------------------------
+tree1_x = -4.5
+tree1_z = 8
+trunk_height = 1.82
+trunk_radius = 0.25
+canopy_radius = 1.1
+#Setting overall shape sizes and eng-goal tree placement, as well as linking the trunk to the tree placement
+trunk1 = cmds.polyCylinder(name="Trunk_01", radius=trunk_radius, height=trunk_height)[0]
+cmds.move(tree1_x, trunk_height / 2.0, tree1_z, trunk1)
 
-
+canopy1 = cmds.polySphere(name="Canopy_01", radius=canopy_radius)[0]
+#Setting up the leaves: assigning size, linking the placement to the trunk while multiplying it with a value that will make it a little lower
+canopy_y = trunk_height + canopy_radius * 0.5
+cmds.move(tree1_x, canopy_y, tree1_z, canopy1)
+canopy_shader = cmds.shadingNode("lambert", asShader=True, name="CanopyMat")
+cmds.setAttr(canopy_shader + ".color", 0, .1, 0, type="double3")
+for canopy in [canopy1]:
+    cmds.select(canopy)
+    cmds.hyperShade(assign=canopy_shader)
+trunk_shader = cmds.shadingNode("lambert", asShader=True, name="TrunkMat")
+cmds.setAttr(trunk_shader + ".color", 0.3, .20, 0.1, type="double3")
+for trunk in [trunk1]:
+    cmds.select(trunk)
+    cmds.hyperShade(assign=trunk_shader)
+#Added a shader and applied it to the trunk in the scene, experimenting with color to get brown
 # ---------------------------------------------------------------------------
 # TODO (Optional): Add more objects to make your scene more interesting!
 # Consider: trees, lamp posts, fences, vehicles, animals, etc.
 # ---------------------------------------------------------------------------
+road_height = .25
+road_width = 24
+road_depth = 2
+road_x = 0
+road_z = 13
+#Using the same Road code as before but counting values for precise placement
+road = cmds.polyCube(name="Road-02",
+width=road_width, height=road_height, depth=road_depth)[0]
+cmds.move(road_x, road_height / 2.0, road_z, road)
+cmds.rotate(0, 90, 0)
 
+road_shader = cmds.shadingNode("lambert", asShader=True, name="RoadMat")
+cmds.setAttr(road_shader + ".color", 0, 0, 0, type="double3")
+cmds.select(road)
+cmds.hyperShade(assign=road_shader)
 
+road_height = .25
+road_width = 24
+road_depth = 2
+road_x = 13
+road_z = -13
+
+road = cmds.polyCube(name="Road-03",
+width=road_width, height=road_height, depth=road_depth)[0]
+cmds.move(road_x, road_height / 2.0, road_z, road)
+cmds.rotate(0, 90, 0)
+
+road_shader = cmds.shadingNode("lambert", asShader=True, name="RoadMat")
+cmds.setAttr(road_shader + ".color", 0, 0, 0, type="double3")
+cmds.select(road)
+cmds.hyperShade(assign=road_shader)
+
+road_height = .25
+road_width = 24
+road_depth = 2
+road_x = -14
+road_z = -13
+
+road = cmds.polyCube(name="Road-04",
+width=road_width, height=road_height, depth=road_depth)[0]
+cmds.move(road_x, road_height / 2.0, road_z, road)
+cmds.rotate(0, 90, 0)
+
+road_shader = cmds.shadingNode("lambert", asShader=True, name="RoadMat")
+cmds.setAttr(road_shader + ".color", 0, 0, 0, type="double3")
+cmds.select(road)
+cmds.hyperShade(assign=road_shader)
 # ---------------------------------------------------------------------------
 # Frame All -- so the whole scene is visible in the viewport.
 # (This is provided for you -- do not remove.)
