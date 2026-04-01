@@ -36,15 +36,15 @@ TIPS:
 
 import maya.cmds as cmds
 
-# 
+#Started a new file
 cmds.file(new=True, force=True)
-#
+#Made Ground Measurements and position on the axis
 ground_width = 50
 ground_depth = 50
 ground_y_position = 0
 
 ground = cmds.polyPlane(
-    name="ground_plane",
+    name="Ground_Plane",
     width=ground_width,
     height=ground_depth,
     subdivisionsX=1,
@@ -189,9 +189,6 @@ road_shader = cmds.shadingNode("lambert", asShader=True, name="RoadMat")
 cmds.setAttr(road_shader + ".color", 0, 0, 0, type="double3")
 cmds.select(road)
 cmds.hyperShade(assign=road_shader)
-# ---------------------------------------------------------------------------
-# Frame All -- so the whole scene is visible in the viewport.
-# (This is provided for you -- do not remove.)
-# ---------------------------------------------------------------------------
+
 cmds.viewFit(allObjects=True)
 print("Scene built successfully!")
