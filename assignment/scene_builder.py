@@ -36,15 +36,9 @@ TIPS:
 
 import maya.cmds as cmds
 
-# ---------------------------------------------------------------------------
-# Clear the scene so we start fresh each time the script runs.
-# (This is provided for you -- do not remove.)
-# ---------------------------------------------------------------------------
+# 
 cmds.file(new=True, force=True)
-# ---------------------------------------------------------------------------
-# Ground Plane
-# ---------------------------------------------------------------------------
-# Descriptive variables for the ground plane dimensions and position.
+#
 ground_width = 50
 ground_depth = 50
 ground_y_position = 0
@@ -61,10 +55,7 @@ ground_shader = cmds.shadingNode("lambert", asShader=True, name="GrassMat")
 cmds.setAttr(ground_shader + ".color", 0, .3, 0, type="double3")
 cmds.select(ground)
 cmds.hyperShade(assign=ground_shader)
-# ---------------------------------------------------------------------------
-# Example Object 1 -- a simple building (cube)
-# This is provided as an example. Study it, then add your own objects below.
-# ---------------------------------------------------------------------------
+#
 building_width = 4
 building_height = 6
 building_depth = 4
@@ -83,14 +74,7 @@ building_shader = cmds.shadingNode("lambert", asShader=True, name="Red01_Buildin
 cmds.setAttr(building_shader + ".color", .2, 0, 0, type="double3")
 cmds.select(building)
 cmds.hyperShade(assign=building_shader)
-# ---------------------------------------------------------------------------
-# TODO: Add Object 2
-# Create a second object using a DIFFERENT primitive type than the cube above.
-# Remember to:
-#   - Use descriptive variable names for size and position.
-#   - Name the object meaningfully with the 'name' parameter or cmds.rename().
-#   - Position it so it sits on the ground (not floating or buried).
-# ---------------------------------------------------------------------------
+#
 building_b_height = 9
 building_b_radius = 2
 building_b_x = -10
@@ -104,9 +88,7 @@ cmds.setAttr(building_b_shader + ".color", 0, .5, .8, type="double3")
 cmds.select(building_b)
 cmds.hyperShade(assign=building_b_shader)
 #Assigned a light blue shader to my second building & changing name convention for the different color
-# ---------------------------------------------------------------------------
-# TODO: Add Object 3
-# ---------------------------------------------------------------------------
+#
 building_height = 4
 building_width = 3
 building_depth = 2
@@ -118,9 +100,7 @@ width=building_width, height=building_height, depth=building_depth)[0]
 cmds.move(building_x, building_height / 2.0, building_z, building)
 cmds.rotate(0, 30, 0)
 
-# ---------------------------------------------------------------------------
-# TODO: Add Object 4
-# ---------------------------------------------------------------------------
+#
 road_height = .25
 road_width = 50
 road_depth = 2
@@ -136,9 +116,7 @@ cmds.setAttr(road_shader + ".color", 0, 0, 0, type="double3")
 cmds.select(road)
 cmds.hyperShade(assign=road_shader)
 #Added no color value for the negative value (black) to result
-# ---------------------------------------------------------------------------
-# TODO: Add Object 5
-# ---------------------------------------------------------------------------
+#
 tree1_x = -4.5
 tree1_z = 8
 trunk_height = 1.82
@@ -163,10 +141,7 @@ for trunk in [trunk1]:
     cmds.select(trunk)
     cmds.hyperShade(assign=trunk_shader)
 #Added a shader and applied it to the trunk in the scene, experimenting with color to get brown
-# ---------------------------------------------------------------------------
-# TODO (Optional): Add more objects to make your scene more interesting!
-# Consider: trees, lamp posts, fences, vehicles, animals, etc.
-# ---------------------------------------------------------------------------
+#
 road_height = .25
 road_width = 24
 road_depth = 2
